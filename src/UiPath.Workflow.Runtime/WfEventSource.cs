@@ -14,7 +14,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TransferEmittedIsEnabled()
     {
-        return IsEnabled(EventLevel.LogAlways, Keywords.Troubleshooting | Keywords.UserEvents | Keywords.EndToEndMonitoring | Keywords.ServiceModel | Keywords.WFTracking | Keywords.ServiceHost | Keywords.WCFMessageLogging, EventChannel.Analytic);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.LogAlways, Keywords.Troubleshooting | Keywords.UserEvents | Keywords.EndToEndMonitoring | Keywords.ServiceModel | Keywords.WFTracking | Keywords.ServiceHost | Keywords.WCFMessageLogging, EventChannel.Analytic);
     }
 
     [Event(EventIds.TransferEmitted, Level = EventLevel.LogAlways, Channel = EventChannel.Analytic,
@@ -27,7 +27,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowApplicationCompletedIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowApplicationCompleted, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangeCompleted, Task = Tasks.WFApplicationStateChange,
@@ -40,7 +40,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowApplicationTerminatedIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowApplicationTerminated, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangeTerminated, Task = Tasks.WFApplicationStateChange,
@@ -53,7 +53,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowInstanceCanceledIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowInstanceCanceled, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangeInstanceCanceled, Task = Tasks.WFApplicationStateChange,
@@ -66,7 +66,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowInstanceAbortedIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowInstanceAborted, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangeInstanceAborted, Task = Tasks.WFApplicationStateChange,
@@ -79,7 +79,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowApplicationIdledIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowApplicationIdled, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangeIdled, Task = Tasks.WFApplicationStateChange,
@@ -92,7 +92,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowApplicationUnhandledExceptionIsEnabled()
     {
-        return IsEnabled(EventLevel.Error, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Error, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowApplicationUnhandledException, Level = EventLevel.Error, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangeUnhandledException, Task = Tasks.WFApplicationStateChange,
@@ -105,7 +105,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowApplicationPersistedIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowApplicationPersisted, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangePersisted, Task = Tasks.WFApplicationStateChange,
@@ -118,7 +118,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowApplicationUnloadedIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowApplicationUnloaded, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangeUnloaded, Task = Tasks.WFApplicationStateChange,
@@ -131,7 +131,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ActivityScheduledIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ActivityScheduled, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.ScheduleActivity,
@@ -144,7 +144,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ActivityCompletedIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ActivityCompleted, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.CompleteActivity,
@@ -157,7 +157,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ScheduleExecuteActivityWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ScheduleExecuteActivityWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.ScheduleWorkItemScheduleExecuteActivity, Task = Tasks.ScheduleWorkItem,
@@ -170,7 +170,7 @@ public sealed class WfEventSource : EventSource
 
     public bool StartExecuteActivityWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.StartExecuteActivityWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.StartWorkItemStartExecuteActivity, Task = Tasks.StartWorkItem,
@@ -183,7 +183,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompleteExecuteActivityWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompleteExecuteActivityWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.CompleteWorkItemCompleteExecuteActivity, Task = Tasks.CompleteWorkItem,
@@ -196,7 +196,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ScheduleCompletionWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ScheduleCompletionWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.ScheduleWorkItemScheduleCompletion, Task = Tasks.ScheduleWorkItem,
@@ -209,7 +209,7 @@ public sealed class WfEventSource : EventSource
 
     public bool StartCompletionWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.StartCompletionWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.StartWorkItemStartCompletion, Task = Tasks.StartWorkItem,
@@ -222,7 +222,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompleteCompletionWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompleteCompletionWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.CompleteWorkItemCompleteCompletion, Task = Tasks.CompleteWorkItem,
@@ -235,7 +235,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ScheduleCancelActivityWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ScheduleCancelActivityWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.ScheduleWorkItemScheduleCancelActivity, Task = Tasks.ScheduleWorkItem,
@@ -248,7 +248,7 @@ public sealed class WfEventSource : EventSource
 
     public bool StartCancelActivityWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.StartCancelActivityWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.StartWorkItemStartCancelActivity, Task = Tasks.StartWorkItem,
@@ -261,7 +261,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompleteCancelActivityWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompleteCancelActivityWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.CompleteWorkItemCompleteCancelActivity, Task = Tasks.CompleteWorkItem,
@@ -274,7 +274,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CreateBookmarkIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CreateBookmark, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.CreateBookmark,
@@ -287,7 +287,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ScheduleBookmarkWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ScheduleBookmarkWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.ScheduleWorkItemScheduleBookmark, Task = Tasks.ScheduleWorkItem,
@@ -300,7 +300,7 @@ public sealed class WfEventSource : EventSource
 
     public bool StartBookmarkWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.StartBookmarkWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.StartWorkItemStartBookmark, Task = Tasks.StartWorkItem,
@@ -313,7 +313,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompleteBookmarkWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompleteBookmarkWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.CompleteWorkItemCompleteBookmark, Task = Tasks.CompleteWorkItem,
@@ -326,7 +326,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CreateBookmarkScopeIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CreateBookmarkScope, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.CreateBookmark,
@@ -339,7 +339,7 @@ public sealed class WfEventSource : EventSource
 
     public bool BookmarkScopeInitializedIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.BookmarkScopeInitialized, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.InitializeBookmarkScope,
@@ -352,7 +352,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ScheduleTransactionContextWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ScheduleTransactionContextWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.ScheduleWorkItemScheduleTransactionContext, Task = Tasks.ScheduleWorkItem,
@@ -365,7 +365,7 @@ public sealed class WfEventSource : EventSource
 
     public bool StartTransactionContextWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.StartTransactionContextWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.StartWorkItemStartTransactionContext, Task = Tasks.StartWorkItem,
@@ -378,7 +378,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompleteTransactionContextWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompleteTransactionContextWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.CompleteWorkItemCompleteTransactionContext, Task = Tasks.CompleteWorkItem,
@@ -391,7 +391,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ScheduleFaultWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ScheduleFaultWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.ScheduleWorkItemScheduleFault, Task = Tasks.ScheduleWorkItem,
@@ -404,7 +404,7 @@ public sealed class WfEventSource : EventSource
 
     public bool StartFaultWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.StartFaultWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.StartWorkItemStartFault, Task = Tasks.StartWorkItem,
@@ -417,7 +417,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompleteFaultWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompleteFaultWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.CompleteWorkItemCompleteFault, Task = Tasks.CompleteWorkItem,
@@ -430,7 +430,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ScheduleRuntimeWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ScheduleRuntimeWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.ScheduleWorkItemScheduleRuntime, Task = Tasks.ScheduleWorkItem,
@@ -443,7 +443,7 @@ public sealed class WfEventSource : EventSource
 
     public bool StartRuntimeWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.StartRuntimeWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.StartWorkItemStartRuntime, Task = Tasks.StartWorkItem,
@@ -456,7 +456,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompleteRuntimeWorkItemIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompleteRuntimeWorkItem, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.CompleteWorkItemCompleteRuntime, Task = Tasks.CompleteWorkItem,
@@ -469,7 +469,7 @@ public sealed class WfEventSource : EventSource
 
     public bool RuntimeTransactionSetIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFServices, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFServices, EventChannel.Debug);
     }
 
     [Event(EventIds.RuntimeTransactionSet, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.RuntimeTransactionSet, Task = Tasks.RuntimeTransaction,
@@ -482,7 +482,7 @@ public sealed class WfEventSource : EventSource
 
     public bool RuntimeTransactionCompletionRequestedIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFServices, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFServices, EventChannel.Debug);
     }
 
     [Event(EventIds.RuntimeTransactionCompletionRequested, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.RuntimeTransactionCompletionRequested, Task = Tasks.RuntimeTransaction,
@@ -495,7 +495,7 @@ public sealed class WfEventSource : EventSource
 
     public bool RuntimeTransactionCompleteIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFServices, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFServices, EventChannel.Debug);
     }
 
     [Event(EventIds.RuntimeTransactionComplete, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.RuntimeTransactionComplete, Task = Tasks.RuntimeTransaction,
@@ -508,7 +508,7 @@ public sealed class WfEventSource : EventSource
 
     public bool EnterNoPersistBlockIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.EnterNoPersistBlock, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.NoPersistBlock,
@@ -521,7 +521,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ExitNoPersistBlockIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ExitNoPersistBlock, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.NoPersistBlock,
@@ -534,7 +534,7 @@ public sealed class WfEventSource : EventSource
 
     public bool InArgumentBoundIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.InArgumentBound, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.ExecuteActivity,
@@ -547,7 +547,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowApplicationPersistableIdleIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowApplicationPersistableIdle, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.WFApplicationStateChangePersistableIdle, Task = Tasks.WFApplicationStateChange,
@@ -560,7 +560,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowActivityStartIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowActivityStart, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = EventOpcode.Start, Task = Tasks.WorkflowActivity,
@@ -573,7 +573,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowActivityStopIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowActivityStop, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = EventOpcode.Stop, Task = Tasks.WorkflowActivity,
@@ -586,7 +586,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowActivitySuspendIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowActivitySuspend, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = EventOpcode.Suspend, Task = Tasks.WorkflowActivity,
@@ -599,7 +599,7 @@ public sealed class WfEventSource : EventSource
 
     public bool WorkflowActivityResumeIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.WorkflowActivityResume, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = EventOpcode.Resume, Task = Tasks.WorkflowActivity,
@@ -612,7 +612,7 @@ public sealed class WfEventSource : EventSource
 
     public bool InvokeMethodIsStaticIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.InvokeMethodIsStatic, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.InvokeMethodIsStatic, Task = Tasks.InvokeMethod,
@@ -625,7 +625,7 @@ public sealed class WfEventSource : EventSource
 
     public bool InvokeMethodIsNotStaticIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.InvokeMethodIsNotStatic, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.InvokeMethodIsNotStatic, Task = Tasks.InvokeMethod,
@@ -638,7 +638,7 @@ public sealed class WfEventSource : EventSource
 
     public bool InvokedMethodThrewExceptionIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.InvokedMethodThrewException, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.InvokeMethodThrewException, Task = Tasks.InvokeMethod,
@@ -651,7 +651,7 @@ public sealed class WfEventSource : EventSource
 
     public bool InvokeMethodUseAsyncPatternIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.InvokeMethodUseAsyncPattern, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.InvokeMethodUseAsyncPattern, Task = Tasks.InvokeMethod,
@@ -664,7 +664,7 @@ public sealed class WfEventSource : EventSource
 
     public bool InvokeMethodDoesNotUseAsyncPatternIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.InvokeMethodDoesNotUseAsyncPattern, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.InvokeMethodDoesNotUseAsyncPattern, Task = Tasks.InvokeMethod,
@@ -677,7 +677,7 @@ public sealed class WfEventSource : EventSource
 
     public bool FlowchartStartIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.FlowchartStart, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.ExecuteFlowchartBegin, Task = Tasks.ExecuteFlowchart,
@@ -690,7 +690,7 @@ public sealed class WfEventSource : EventSource
 
     public bool FlowchartEmptyIsEnabled()
     {
-        return IsEnabled(EventLevel.Warning, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Warning, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.FlowchartEmpty, Level = EventLevel.Warning, Channel = EventChannel.Debug, Opcode = Opcodes.ExecuteFlowchartEmpty, Task = Tasks.ExecuteFlowchart,
@@ -703,7 +703,7 @@ public sealed class WfEventSource : EventSource
 
     public bool FlowchartNextNullIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.FlowchartNextNull, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.ExecuteFlowchartNextNull, Task = Tasks.ExecuteFlowchart,
@@ -716,7 +716,7 @@ public sealed class WfEventSource : EventSource
 
     public bool FlowchartSwitchCaseIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.FlowchartSwitchCase, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.ExecuteFlowchartSwitchCase, Task = Tasks.ExecuteFlowchart,
@@ -729,7 +729,7 @@ public sealed class WfEventSource : EventSource
 
     public bool FlowchartSwitchDefaultIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.FlowchartSwitchDefault, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.ExecuteFlowchartSwitchDefault, Task = Tasks.ExecuteFlowchart,
@@ -742,7 +742,7 @@ public sealed class WfEventSource : EventSource
 
     public bool FlowchartSwitchCaseNotFoundIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.FlowchartSwitchCaseNotFound, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.ExecuteFlowchartSwitchCaseNotFound, Task = Tasks.ExecuteFlowchart,
@@ -755,7 +755,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompensationStateIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.CompensationState, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.CompensationState,
@@ -768,7 +768,7 @@ public sealed class WfEventSource : EventSource
 
     public bool SwitchCaseNotFoundIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.SwitchCaseNotFound, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.ExecuteActivity,
@@ -781,7 +781,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ExecuteWorkItemStartIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ExecuteWorkItemStart, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Start, Task = Tasks.ExecuteWorkItem,
@@ -794,7 +794,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ExecuteWorkItemStopIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.ExecuteWorkItemStop, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Stop, Task = Tasks.ExecuteWorkItem,
@@ -807,7 +807,7 @@ public sealed class WfEventSource : EventSource
 
     public bool SendMessageChannelCacheMissIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.SendMessageChannelCacheMiss, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = Opcodes.MessageChannelCacheMissed, Task = Tasks.MessageChannelCache,
@@ -820,7 +820,7 @@ public sealed class WfEventSource : EventSource
 
     public bool InternalCacheMetadataStartIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.InternalCacheMetadataStart, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Start, Task = Tasks.InternalCacheMetadata,
@@ -833,7 +833,7 @@ public sealed class WfEventSource : EventSource
 
     public bool InternalCacheMetadataStopIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.InternalCacheMetadataStop, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Stop, Task = Tasks.InternalCacheMetadata,
@@ -846,7 +846,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompileVbExpressionStartIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompileVbExpressionStart, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Start, Task = Tasks.VBExpressionCompile,
@@ -859,7 +859,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CacheRootMetadataStartIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CacheRootMetadataStart, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Start, Task = Tasks.CacheRootMetadata,
@@ -872,7 +872,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CacheRootMetadataStopIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CacheRootMetadataStop, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Stop, Task = Tasks.CacheRootMetadata,
@@ -885,7 +885,7 @@ public sealed class WfEventSource : EventSource
 
     public bool CompileVbExpressionStopIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.CompileVbExpressionStop, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Stop, Task = Tasks.VBExpressionCompile,
@@ -898,7 +898,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TryCatchExceptionFromTryIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.TryCatchExceptionFromTry, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.TryCatchExceptionFromTry, Task = Tasks.TryCatchException,
@@ -911,7 +911,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TryCatchExceptionDuringCancelationIsEnabled()
     {
-        return IsEnabled(EventLevel.Warning, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Warning, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.TryCatchExceptionDuringCancelation, Level = EventLevel.Warning, Channel = EventChannel.Debug, Opcode = Opcodes.TryCatchExceptionDuringCancelation, Task = Tasks.TryCatchException,
@@ -924,7 +924,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TryCatchExceptionFromCatchOrFinallyIsEnabled()
     {
-        return IsEnabled(EventLevel.Warning, Keywords.WFActivities, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Warning, Keywords.WFActivities, EventChannel.Debug);
     }
 
     [Event(EventIds.TryCatchExceptionFromCatchOrFinally, Level = EventLevel.Warning, Channel = EventChannel.Debug, Opcode = Opcodes.TryCatchExceptionFromCatchOrFinally, Task = Tasks.TryCatchException,
@@ -937,7 +937,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TrackingRecordDroppedIsEnabled()
     {
-        return IsEnabled(EventLevel.Warning, Keywords.WFTracking, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Warning, Keywords.WFTracking, EventChannel.Debug);
     }
 
     [Event(EventIds.TrackingRecordDropped, Level = EventLevel.Warning, Channel = EventChannel.Debug, Opcode = Opcodes.TrackingRecordDropped, Task = Tasks.TrackingRecord,
@@ -950,7 +950,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TrackingRecordRaisedIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.TrackingRecordRaised, Level = EventLevel.Informational, Channel = EventChannel.Debug, Opcode = Opcodes.TrackingRecordRaised, Task = Tasks.TrackingRecord,
@@ -963,7 +963,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TrackingRecordTruncatedIsEnabled()
     {
-        return IsEnabled(EventLevel.Warning, Keywords.WFTracking, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Warning, Keywords.WFTracking, EventChannel.Debug);
     }
 
     [Event(EventIds.TrackingRecordTruncated, Level = EventLevel.Warning, Channel = EventChannel.Debug, Opcode = Opcodes.TrackingRecordTruncated, Task = Tasks.TrackingRecord,
@@ -976,7 +976,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TrackingDataExtractedIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.WFRuntime, EventChannel.Debug);
     }
 
     [Event(EventIds.TrackingDataExtracted, Level = EventLevel.Verbose, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.TrackingProfile,
@@ -989,7 +989,7 @@ public sealed class WfEventSource : EventSource
 
     public bool TrackingValueNotSerializableIsEnabled()
     {
-        return IsEnabled(EventLevel.Warning, Keywords.WFTracking, EventChannel.Debug);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Warning, Keywords.WFTracking, EventChannel.Debug);
     }
 
     [Event(EventIds.TrackingValueNotSerializable, Level = EventLevel.Warning, Channel = EventChannel.Debug, Opcode = EventOpcode.Info, Task = Tasks.TrackingProfile,
@@ -1002,7 +1002,7 @@ public sealed class WfEventSource : EventSource
 
     public bool HandledExceptionIsEnabled()
     {
-        return IsEnabled(EventLevel.Informational, Keywords.Infrastructure, EventChannel.Analytic);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Informational, Keywords.Infrastructure, EventChannel.Analytic);
     }
 
     [Event(EventIds.HandledException, Level = EventLevel.Informational, Channel = EventChannel.Analytic,
@@ -1015,7 +1015,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ShipAssertExceptionMessageIsEnabled()
     {
-        return IsEnabled(EventLevel.Error, Keywords.Infrastructure, EventChannel.Analytic);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Error, Keywords.Infrastructure, EventChannel.Analytic);
     }
 
     [Event(EventIds.ShipAssertExceptionMessage, Level = EventLevel.Error, Channel = EventChannel.Analytic,
@@ -1028,7 +1028,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ThrowingExceptionIsEnabled()
     {
-        return IsEnabled(EventLevel.Warning, Keywords.Infrastructure, EventChannel.Analytic);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Warning, Keywords.Infrastructure, EventChannel.Analytic);
     }
 
     [Event(EventIds.ThrowingException, Level = EventLevel.Warning, Channel = EventChannel.Analytic,
@@ -1041,7 +1041,7 @@ public sealed class WfEventSource : EventSource
 
     public bool UnhandledExceptionIsEnabled()
     {
-        return IsEnabled(EventLevel.Critical, Keywords.Infrastructure, EventChannel.Operational);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Critical, Keywords.Infrastructure, EventChannel.Operational);
     }
 
     [Event(EventIds.UnhandledException, Level = EventLevel.Critical, Channel = EventChannel.Operational,
@@ -1054,7 +1054,7 @@ public sealed class WfEventSource : EventSource
 
     public bool HandledExceptionWarningIsEnabled()
     {
-        return IsEnabled(EventLevel.Warning, Keywords.Infrastructure, EventChannel.Analytic);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Warning, Keywords.Infrastructure, EventChannel.Analytic);
     }
 
     [Event(EventIds.HandledExceptionWarning, Level = EventLevel.Warning, Channel = EventChannel.Analytic,
@@ -1067,7 +1067,7 @@ public sealed class WfEventSource : EventSource
 
     public bool HandledExceptionErrorIsEnabled()
     {
-        return IsEnabled(EventLevel.Error, Keywords.Infrastructure, EventChannel.Operational);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Error, Keywords.Infrastructure, EventChannel.Operational);
     }
 
     [Event(EventIds.HandledExceptionError, Level = EventLevel.Error, Channel = EventChannel.Operational,
@@ -1080,7 +1080,7 @@ public sealed class WfEventSource : EventSource
 
     public bool HandledExceptionVerboseIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.Infrastructure, EventChannel.Analytic);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.Infrastructure, EventChannel.Analytic);
     }
 
     [Event(EventIds.HandledExceptionVerbose, Level = EventLevel.Verbose, Channel = EventChannel.Analytic,
@@ -1093,7 +1093,7 @@ public sealed class WfEventSource : EventSource
 
     public bool ThrowingExceptionVerboseIsEnabled()
     {
-        return IsEnabled(EventLevel.Verbose, Keywords.Infrastructure, EventChannel.Analytic);
+        return FxTrace.IsEtwProviderEnabled && IsEnabled(EventLevel.Verbose, Keywords.Infrastructure, EventChannel.Analytic);
     }
 
     [Event(EventIds.ThrowingExceptionVerbose, Level = EventLevel.Verbose, Channel = EventChannel.Analytic,

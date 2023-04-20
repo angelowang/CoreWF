@@ -35,4 +35,6 @@ internal static partial class FxTrace
             return s_eventSourceName;
         }
     }
+
+    internal static bool IsEtwProviderEnabled => false;
 }
