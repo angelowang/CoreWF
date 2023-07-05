@@ -24,6 +24,7 @@ internal sealed class ActivityLocationReferenceEnvironment : LocationReferenceEn
         {
             CompileExpressions = parent.CompileExpressions;
             IsValidating = parent.IsValidating;
+            IsPreCompilingExpressions = parent.IsPreCompilingExpressions;
             InternalRoot = parent.Root;
             Extensions = parent.Extensions;
         }

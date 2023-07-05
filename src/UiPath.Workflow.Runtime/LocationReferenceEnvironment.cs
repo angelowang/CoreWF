@@ -16,6 +16,11 @@ public abstract class LocationReferenceEnvironment
     /// </summary>
     internal bool IsValidating { get; set; }
 
+    /// <summary>
+    /// Indicates if this LRE is created to collect all expressions to compile together.
+    /// </summary>
+    internal bool IsPreCompilingExpressions { get; set; }
+
     internal EnvironmentExtensions Extensions { get; set; }
 
     public abstract Activity Root { get; }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CSharp.Activities;
 using Microsoft.VisualBasic.Activities;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace System.Activities.Validation
 {
@@ -10,6 +11,21 @@ namespace System.Activities.Validation
         {
             var validator = GetValidator(Scope.Language);
             return validator.Validate(activity, Scope);
+        }
+
+        public void PreCompileLambdaExpressions(Activity activity)
+        {
+            // clear for every xaml.
+            Scope.ClearPreCompiledLambdaExpressions();
+
+            var validator = GetValidator(Scope.Language);
+            validator.PreCompileExpressions(activity, Scope,
+                (returnTypeName, expressionText, expression) => Scope.SetPreCompiledLambdaExpression(returnTypeName, expressionText, expression));
+        }
+
+        public LambdaExpression GetPreCompiledLambdaExpression(string returnTypeName, string expressionText)
+        {
+            return Scope.GetPreCompiledLambdaExpression(returnTypeName, expressionText);
         }
 
         private static RoslynExpressionValidator GetValidator(string language)

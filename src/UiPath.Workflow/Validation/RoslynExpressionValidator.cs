@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 using System.Text.RegularExpressions;
 using static System.Activities.JitCompilerHelper;
@@ -211,6 +213,71 @@ public abstract class RoslynExpressionValidator
         return errors;
     }
 
+    internal void PreCompileExpressions(Activity currentActivity, ValidationScope validationScope, Action<string, string, LambdaExpression> cacheCallback)
+    {
+        if (validationScope is null)
+        {
+            return;
+        }
+
+        var requiredAssemblies = new HashSet<Assembly>(RequiredAssemblies);
+
+        GetAllImportReferences(currentActivity, true, out var localNamespaces, out var localAssemblies);
+        requiredAssemblies.UnionWith(localAssemblies.Where(aref => aref is not null).Select(aref => aref.Assembly ?? LoadAssemblyFromReference(aref)));
+        localNamespaces.AddRange(_defaultNamespaces);
+
+        EnsureAssembliesLoaded(requiredAssemblies);
+        var compilation = GetCompilation(requiredAssemblies, localNamespaces);
+        var expressionsTextBuilder = new StringBuilder();
+        int index = 0;
+        foreach (var expressionToValidate in validationScope.GetAllExpressions())
+        {
+            EnsureReturnTypeReferenced(expressionToValidate.ResultType, ref compilation);
+            PrepValidation(expressionToValidate, expressionsTextBuilder, index++);
+        }
+
+        compilation = compilation.AddSyntaxTrees(GetSyntaxTreeForValidation(expressionsTextBuilder.ToString()));
+
+        // now do the compilation, and populate the lambda expressions.
+        var collectibleAlc = new AssemblyLoadContext("ScriptValidator" + Guid.NewGuid().ToString("N"), true);
+        collectibleAlc.Resolving += CollectibleAlc_Resolving;
+        using var scope = collectibleAlc.EnterContextualReflection();
+        var results = ScriptingAotCompiler.BuildAssembly(compilation, compilation.ScriptClass.Name, collectibleAlc);
+        collectibleAlc.Resolving -= CollectibleAlc_Resolving;
+
+        if (!results.HasErrors)
+        {
+            int index1 = 0;
+            foreach (var expressionToValidate in validationScope.GetAllExpressions())
+            {
+                var expression = results.ResultType.GetMethod($"CreateExpression{index1}")?.Invoke(null, null) as LambdaExpression;
+                if (expression != null)
+                {
+                    // 1)
+                    // return type is needed as we could get argument exception even Rewrite succeeds.
+                    // for example, in WF4Samples, NonGenericForEach.xaml, there are 3 expressions taking moreNames,
+                    // but one of them are returning IEnumerable, and the other returning ArrayList.
+                    // if we use expression text only, the IEnumerable one will be cached, and later will fail in Compile()
+                    // when building the expression tree from the lambda expression, with ArgumentException.
+                    // 2)
+                    // we cannot cache by activity id, as when we call CacheRootMetadata(), DynamicActivity.OnInternalCacheMetadata()
+                    // will always creating new VisualBasicValues/VisualBasicReferences, which makes the cache almost useless.
+                    cacheCallback(expressionToValidate.ResultType.Name, expressionToValidate.ExpressionText, expression);
+                }
+                ++index1;
+            }
+        }
+    }
+
+    private Assembly CollectibleAlc_Resolving(AssemblyLoadContext loadContext, AssemblyName assemblyName)
+    {
+        var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == assemblyName.FullName);
+        if (assembly != null)
+            return assembly;
+
+        return loadContext.LoadFromAssemblyName(assemblyName);
+    }
+
     /// <summary>
     ///     Creates or gets a MetadataReference for an Assembly.
     /// </summary>
@@ -277,7 +344,9 @@ public abstract class RoslynExpressionValidator
         var names = string.Join(Comma, resolvedIdentifiers.Select(var => var.Name));
         var types = resolvedIdentifiers.Select(var => var.Type).Select(GetTypeName);
         var returnType = GetTypeName(expressionToValidate.ResultType);
-        var lambdaFuncCode = CreateValidationCode(types, returnType, names, expressionToValidate.ExpressionText, expressionToValidate.IsLocation, expressionToValidate.Activity.Id, index);
+        // for pre-compile expressions, we always create "CreateExpressionN".
+        bool isLocation = expressionToValidate.Environment.IsPreCompilingExpressions ? false : expressionToValidate.IsLocation;
+        var lambdaFuncCode = CreateValidationCode(types, returnType, names, expressionToValidate.ExpressionText, isLocation, expressionToValidate.Activity.Id, index);
         expressionBuilder.AppendLine(lambdaFuncCode);
     }
 

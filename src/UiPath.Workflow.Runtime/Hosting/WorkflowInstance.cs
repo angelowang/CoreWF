@@ -332,6 +332,11 @@ public abstract class WorkflowInstance
                 }
                 localEnvironment = new ActivityLocationReferenceEnvironment(parentEnvironment);
             }
+
+            // To speed up, we pre compile VB expressions.
+            localEnvironment.Extensions ??= new();
+            ActivityValidationServices.PreCompileExpressions(WorkflowDefinition, new() { Environment = localEnvironment });
+
             IList<ValidationError> validationErrors = null;
             ActivityUtilities.CacheRootMetadata(WorkflowDefinition, localEnvironment, ProcessActivityTreeOptions.FullCachingOptions, null, ref validationErrors);
             ActivityValidationServices.ThrowIfViolationsExist(validationErrors);

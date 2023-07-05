@@ -23,7 +23,7 @@ namespace System.Activities
                 return true;
             }
 
-            if (metadata.Environment.IsValidating)
+            if (metadata.Environment.IsValidating || metadata.Environment.IsPreCompilingExpressions)
             {
                 var extension = metadata.Environment.Extensions.GetOrAdd(_validationFunc);
                 extension.QueueExpressionForValidation<T>(new()

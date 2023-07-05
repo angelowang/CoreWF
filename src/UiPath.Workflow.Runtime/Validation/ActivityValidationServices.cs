@@ -4,6 +4,7 @@
 using System.Activities.Runtime;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace System.Activities.Validation;
@@ -41,6 +42,32 @@ public static class ActivityValidationServices
 
         InternalActivityValidationServices validator = new(settings, toValidate);
         return validator.InternalValidate();
+    }
+
+    public static void PreCompileExpressions(Activity toValidate, ValidationSettings settings)
+    {
+        if (toValidate == null)
+        {
+            throw FxTrace.Exception.ArgumentNull(nameof(toValidate));
+        }
+
+        if (settings == null)
+        {
+            throw FxTrace.Exception.ArgumentNull(nameof(settings));
+        }
+
+        if (toValidate.HasBeenAssociatedWithAnInstance)
+        {
+            throw FxTrace.Exception.AsError(new InvalidOperationException(SR.RootActivityAlreadyAssociatedWithInstance(toValidate.DisplayName)));
+        }
+
+        if (settings.PrepareForRuntime && (settings.SingleLevel || settings.SkipValidatingRootConfiguration || settings.OnlyUseAdditionalConstraints))
+        {
+            throw FxTrace.Exception.Argument(nameof(settings), SR.InvalidPrepareForRuntimeValidationSettings);
+        }
+
+        InternalActivityValidationServices validator = new(settings, toValidate);
+        validator.InternalPreCompileExpressions();
     }
 
     public static Activity Resolve(Activity root, string id) => WorkflowInspectionServices.Resolve(root, id);
@@ -469,6 +496,38 @@ public static class ActivityValidationServices
             }
 
             return new ValidationResults(_errors);
+        }
+
+        internal void InternalPreCompileExpressions()
+        {
+            _options = ProcessActivityTreeOptions.GetValidationOptions(_settings);
+
+            _environment.IsPreCompilingExpressions = true;
+
+            try
+            {
+                if (_settings.OnlyUseAdditionalConstraints)
+                {
+                    // We don't want the errors from CacheMetadata so we send those to a "dummy" list.
+                    IList<ValidationError> suppressedErrors = null;
+                    ActivityUtilities.CacheRootMetadata(_rootToValidate, _environment, _options, new ActivityUtilities.ProcessActivityCallback(ValidateElement), ref suppressedErrors);
+                }
+                else
+                {
+                    // We want to add the CacheMetadata errors to our errors collection
+                    ActivityUtilities.CacheRootMetadata(_rootToValidate, _environment, _options, new ActivityUtilities.ProcessActivityCallback(ValidateElement), ref _errors);
+                }
+
+                var extension = GetValidationExtension(_environment);
+                if (extension is not null)
+                {
+                    extension.PreCompileLambdaExpressions(_rootToValidate);
+                }
+            }
+            finally
+            {
+                _environment.IsPreCompilingExpressions = false;
+            }
         }
 
         private static IValidationExtension GetValidationExtension(LocationReferenceEnvironment environment)

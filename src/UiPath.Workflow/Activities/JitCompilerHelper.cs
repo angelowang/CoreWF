@@ -5,6 +5,7 @@ using System.Activities.ExpressionParser;
 using System.Activities.Expressions;
 using System.Activities.Internals;
 using System.Activities.Runtime;
+using System.Activities.Validation;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -1549,8 +1550,18 @@ internal abstract class JitCompilerHelper<TLanguage> : JitCompilerHelper
         LambdaExpression lambda = null;
         try
         {
-            lambda = compiler.CompileExpression(ExpressionToCompile(scriptAndTypeScope.FindVariable,
-                lambdaReturnType));
+
+            var extension = environment?.Extensions?.Get<IValidationExtension>();
+            if (extension != null)
+            {
+                lambda = extension.GetPreCompiledLambdaExpression(lambdaReturnType.Name, TextToCompile);
+            }
+
+            if (lambda == null)
+            {
+                lambda = compiler.CompileExpression(ExpressionToCompile(scriptAndTypeScope.FindVariable,
+                    lambdaReturnType));
+            }
         }
         catch (Exception e)
         {
