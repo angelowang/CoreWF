@@ -17,6 +17,18 @@ namespace System.Activities.Validation
                 expressionToValidate.Activity.AddTempValidationError(new ValidationError(SR.DynamicActivityMultipleExpressionLanguages(language), expressionToValidate.Activity));
                 return;
             }
+
+            if (expressionToValidate.Environment.IsPreCompilingExpressions)
+            {
+                var key = new KeyValuePair<string, string>(expressionToValidate.ResultType.Name, expressionToValidate.ExpressionText);
+                if (_lambdaExpressions.ContainsKey(key))
+                {
+                    return;
+                }
+
+                _lambdaExpressions.Add(key, null);
+            }
+
             _expressionsToValidate.Add(expressionToValidate.Activity.Id, expressionToValidate);
         }
 
@@ -27,7 +39,7 @@ namespace System.Activities.Validation
 
         internal void SetPreCompiledLambdaExpression(string returnTypeName, string expressionText, LambdaExpression expression)
         {
-            _lambdaExpressions.TryAdd(new(returnTypeName, expressionText), expression);
+            _lambdaExpressions[new(returnTypeName, expressionText)] = expression;
         }
 
         internal LambdaExpression GetPreCompiledLambdaExpression(string returnTypeName, string expressionText)

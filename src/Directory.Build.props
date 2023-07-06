@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>6.0.3-autodesk-dev-1.0.3</Version>
+        <Version>6.0.3-autodesk-dev-1.0.4</Version>
         <RoslynPackageVersion>4.0.1</RoslynPackageVersion>
         <WarningsAsErrors>true</WarningsAsErrors>
         <UseWPF Condition="$(TargetFramework) == 'net6.0-windows'">true</UseWPF>
