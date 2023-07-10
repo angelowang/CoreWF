@@ -4,12 +4,10 @@ namespace System.Activities.Validation
 {
     internal interface IValidationExtension
     {
-        IList<ValidationError> Validate(Activity activity);
+        IEnumerable<ValidationError> PostValidate(Activity activity);
 
-        // Enable precompiling VB expressions in a single pass to improve runtime exeution performance.
+        // Enable precompiling VB expressions in a single pass to improve runtime execution performance.
         void PreCompileLambdaExpressions(Activity activity);
         LambdaExpression GetPreCompiledLambdaExpression(string returnTypeName, string expressionText);
-
-        void QueueExpressionForValidation<T>(ExpressionToValidate expressionToValidate, string language);
     }
 }

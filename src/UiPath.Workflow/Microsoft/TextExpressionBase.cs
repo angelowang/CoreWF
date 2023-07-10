@@ -1,14 +1,12 @@
 ﻿using System.Activities.Expressions;
 using System.Activities.Validation;
-using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace System.Activities
 {
     public abstract class TextExpressionBase<TResult> : CodeActivity<TResult>, ITextExpression
     {
-        private static readonly Func<IValidationExtension> _validationFunc = () =>
-        new ValidationExtension();
+        private static readonly Func<ValidationExtension> _validationFunc = () => new();
 
         public abstract string ExpressionText { get; set; }
 

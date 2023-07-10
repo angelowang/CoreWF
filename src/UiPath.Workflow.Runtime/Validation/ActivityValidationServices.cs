@@ -481,21 +481,10 @@ public static class ActivityValidationServices
                 ActivityUtilities.CacheRootMetadata(_rootToValidate, _environment, _options, new ActivityUtilities.ProcessActivityCallback(ValidateElement), ref _errors);
             }
 
-            var extension = GetValidationExtension(_environment);
-            if (extension is not null)
-            {
-                var results = extension.Validate(_rootToValidate);
-                if (_errors?.Any() == true)
-                {
-                    foreach (var error in _errors)
-                    {
-                        results.Add(error);
-                    }
-                }
-                return new ValidationResults(results);
-            }
+            return new ValidationResults(GetValidationExtensionResults().Concat(_errors ?? Array.Empty<ValidationError>()).ToList());
 
-            return new ValidationResults(_errors);
+            IEnumerable<ValidationError> GetValidationExtensionResults() =>
+                _environment.Extensions.All.OfType<IValidationExtension>().SelectMany(validationExtension => validationExtension.PostValidate(_rootToValidate));
         }
 
         internal void InternalPreCompileExpressions()
@@ -518,8 +507,7 @@ public static class ActivityValidationServices
                     ActivityUtilities.CacheRootMetadata(_rootToValidate, _environment, _options, new ActivityUtilities.ProcessActivityCallback(ValidateElement), ref _errors);
                 }
 
-                var extension = GetValidationExtension(_environment);
-                if (extension is not null)
+                foreach (var extension in _environment.Extensions.All.OfType<IValidationExtension>())
                 {
                     extension.PreCompileLambdaExpressions(_rootToValidate);
                 }

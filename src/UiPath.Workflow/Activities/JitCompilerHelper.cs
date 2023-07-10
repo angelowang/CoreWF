@@ -1551,10 +1551,17 @@ internal abstract class JitCompilerHelper<TLanguage> : JitCompilerHelper
         try
         {
 
-            var extension = environment?.Extensions?.Get<IValidationExtension>();
-            if (extension != null)
+            var extensions = environment?.Extensions?.All?.OfType<IValidationExtension>();
+            if (extensions != null)
             {
-                lambda = extension.GetPreCompiledLambdaExpression(lambdaReturnType.Name, TextToCompile);
+                foreach (var extension in extensions)
+                {
+                    lambda = extension.GetPreCompiledLambdaExpression(lambdaReturnType.Name, TextToCompile);
+                    if (lambda != null)
+                    {
+                        break;
+                    }
+                }
             }
 
             if (lambda == null)
