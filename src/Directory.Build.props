@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
-        <Version>8.0.0-autodesk-dev-1.0.1</Version>
-        <RoslynPackageVersion>4.8.0</RoslynPackageVersion>
+        <Version>8.0.0-autodesk-dev-1.0.2</Version>
+        <RoslynPackageVersion>4.10.0</RoslynPackageVersion>
         <WarningsAsErrors>true</WarningsAsErrors>
         <UseWPF Condition="$(TargetFramework) == 'net8.0-windows'">true</UseWPF>
     </PropertyGroup>
